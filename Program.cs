@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthCare.API.Persistence.Contexts;
@@ -28,8 +29,11 @@ namespace HealthCare.API
             host.Run();
         }
 
-         public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args) =>
+
+            WebHost.CreateDefaultBuilder(args).UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
             .UseStartup<Startup>()
             .Build();
         }
